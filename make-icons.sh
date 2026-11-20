@@ -1,18 +1,21 @@
 #!/usr/bin/env bash
-# Makes the Android launcher icon PNGs from the Workman Chat logo (needs ImageMagick).
-set -euo pipefail
-ROOT="$(cd "$(dirname "$0")/.." && pwd)"
-RES="${1:-$ROOT/android/app/src/main/res}"
-CONVERT="$(command -v magick || command -v convert)"
-# density  legacy-size  adaptive-foreground-size
-for spec in mdpi:48:108 hdpi:72:162 xhdpi:96:216 xxhdpi:144:324 xxxhdpi:192:432; do
-  IFS=: read -r d legacy fg <<< "$spec"
-  dir="$RES/mipmap-$d"
-  mkdir -p "$dir"
-  "$CONVERT" "$ROOT/icon-512.png" -resize "${legacy}x${legacy}" "$dir/ic_launcher.png"
-  "$CONVERT" "$ROOT/icon-512.png" -resize "${legacy}x${legacy}" \
-    \( +clone -alpha extract -fill black -colorize 100 -fill white -draw "circle $((legacy/2)),$((legacy/2)) $((legacy/2)),0" \) \
-    -alpha off -compose CopyOpacity -composite "$dir/ic_launcher_round.png"
-  "$CONVERT" "$ROOT/icon-maskable-512.png" -resize "${fg}x${fg}" "$dir/wc_foreground.png"
+set -e
+
+ROOT_DIR="$(cd "$(dirname "${BASH_SOURCE[0]}")" && pwd)"
+RES_DIR="$ROOT_DIR/android/app/src/main/res"
+SRC_ICON="$ROOT_DIR/icon-512.png"
+
+if [ ! -f "$SRC_ICON" ]; then
+  SRC_ICON="$ROOT_DIR/icon-192.png"
+fi
+
+for d in mipmap-mdpi mipmap-hdpi mipmap-xhdpi mipmap-xxhdpi mipmap-xxxhdpi; do
+  mkdir -p "$RES_DIR/$d"
+  if [ -f "$SRC_ICON" ]; then
+    cp "$SRC_ICON" "$RES_DIR/$d/ic_launcher.png"
+    cp "$SRC_ICON" "$RES_DIR/$d/ic_launcher_round.png"
+    cp "$SRC_ICON" "$RES_DIR/$d/ic_launcher_foreground.png"
+  fi
 done
-echo "Launcher icons written to $RES"
+
+echo "Icons copied to Android mipmap folders."
