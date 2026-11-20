@@ -1,7 +1,7 @@
 // Copies the web app into www/ (what Capacitor packages into the Android app).
 const fs = require('fs');
 const path = require('path');
-const root = path.resolve(__dirname, '..');
+const root = __dirname;
 const out = path.join(root, 'www');
 fs.rmSync(out, { recursive: true, force: true });
 fs.mkdirSync(out, { recursive: true });
