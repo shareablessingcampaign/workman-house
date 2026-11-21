@@ -1,7 +1,0 @@
-{
-  "appId": "com.workman.chat",
-  "appName": "Workman Chat",
-  "webDir": "www",
-  "server": { "androidScheme": "https" },
-  "android": { "allowMixedContent": false }
-}
