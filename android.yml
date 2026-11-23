@@ -26,15 +26,15 @@ jobs:
         run: npm install
 
       - name: Package the web app
-        run: node build-www.js
+        run: node scripts/build-www.js
 
       - name: Create the Android project
         run: npx cap add android
 
       - name: Add Bluetooth plugin, permissions and icon
         run: |
-          node patch-android.js
-          bash make-icons.sh
+          node scripts/patch-android.js
+          bash scripts/make-icons.sh
 
       - name: Sync web files into Android
         run: npx cap sync android

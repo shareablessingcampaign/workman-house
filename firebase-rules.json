@@ -1,0 +1,18 @@
+{
+  "rules": {
+    "owners": {
+      "$code": {
+        ".read": false,
+        ".write": "auth != null && (!data.exists() || data.val() === auth.uid)"
+      }
+    },
+    "inbox": {
+      "$code": {
+        ".read": "auth != null && root.child('owners').child($code).val() === auth.uid",
+        "$mid": {
+          ".write": "auth != null && (!data.exists() || root.child('owners').child($code).val() === auth.uid)"
+        }
+      }
+    }
+  }
+}
