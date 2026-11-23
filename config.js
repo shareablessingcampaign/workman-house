@@ -11,8 +11,8 @@
 
    Anything a user types or pastes inside the app (Internet ID & contacts) overrides these defaults on that phone. */
 window.WC_CONFIG = {
-  firebaseApiKey: '',
-  firebaseDatabaseUrl: '',
+  firebaseApiKey: 'AIzaSyALFkGWygMgDm-BDuSqnfhenNz0o6_168I',
+  firebaseDatabaseUrl: 'https://workman-b2397-default-rtdb.firebaseio.com',
   turnServer: '',
   setupCode: ''
 };
